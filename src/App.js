@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, createContext } from 'react';
+import { Box } from '@mui/material';
+import TasksContainer from './components/TasksContainer';
+import InputTaskContainer from './components/InputTaskContainer';
 
-function App() {
+const appContainerStyle = {
+  padding: { xs: 2, sm: 4 },
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  gap: 4,
+  maxWidth: 600,
+  minWidth: 320,
+  margin: '0 auto',
+};
+
+export const AppContext = createContext();
+
+const App = () => {
+  const [state, setState] = useState({
+    todoList: [],
+    newTask: '',
+  });
+
+  const value = [state, setState];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={value}>
+      <Box sx={appContainerStyle}>
+        <InputTaskContainer />
+        <TasksContainer />
+      </Box>
+    </AppContext.Provider>
   );
-}
+};
 
 export default App;
